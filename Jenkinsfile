@@ -34,7 +34,7 @@ pipeline {
     stages {
       stage('Semgrep-Scan') {
         steps {
-          sh 'apt install semgrep'
+          sh 'docker run --rm -v "${PWD}:/src" returntocorp/semgrep semgrep --config=auto'
           sh 'semgrep scan --config auto --json -o semgrep.json'
           sh '''curl -X \'POST\' \\
             \'http://devkinetics.az.devops.com.ph/api/v2/reimport-scan/\' \\
