@@ -1,0 +1,39 @@
+{% extends 'index.html' %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/style.css')}}" />
+  </head>
+
+  <body>
+    {% block content %}
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/style.css')}}" />
+    <form action="main.html" method="post">
+      <div class="LoginBox">
+        <img
+          src="{{url_for('static', filename='images/309487229_522569379693232_2535156426602052272_n.png')}}"
+        />
+
+        <input
+          type="text"
+          id="username"
+          name="email"
+          placeholder="Email"
+        />
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Password"
+        />
+
+        <form action="" method="post">
+          <button type="submit" id="submitLogin">Log in</button>
+        </form>
+
+      </div>
+    </form>
+    {% endblock %}
+  </body>
+</html>
