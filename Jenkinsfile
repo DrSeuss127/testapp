@@ -1,5 +1,5 @@
 pipeline {
-  agent any
+  agent docker
   stages {
     stage('Semgrep-Scan') {
         environment { 
@@ -29,7 +29,6 @@ pipeline {
                 -F \'scan_type=Semgrep JSON Report\' \\
                 -F \'tags=test\' \\'''
         }
-        
       }
     }
   }
