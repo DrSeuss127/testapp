@@ -29,8 +29,8 @@ spec:
   stages {
     stage('Install Python') {
       steps {
-            sh 'sudo apt-get update'
-            sh 'sudo apt-get install python3'
+            sh 'apt-get update'
+            sh 'apt-get install python3'
       }
     }
     stage('Semgrep-Scan') {
