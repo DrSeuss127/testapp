@@ -18,7 +18,7 @@ RUN /usr/local/bin/install-plugins.sh \
   ant \
   antisamy-markup-formatter \
   authentication-tokens \
-	blueocean \
+  blueocean \
   blueocean-autofavorite \
   blueocean-commons \
   blueocean-config \
