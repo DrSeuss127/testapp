@@ -1,5 +1,9 @@
 pipeline {
-  agent docker
+  agent{
+    docker{
+      image 'node:16-alpine'
+    }
+  }
   stages {
     stage('Semgrep-Scan') {
         environment { 
@@ -13,9 +17,8 @@ pipeline {
           // SEMGREP_TIMEOUT = "300"
         } 
       steps {
-        container('alpine'){
-            sh 'apk update && apk upgrade --available'
-            sh 'apk add --update python3'
+            sh 'sudo apt-get update'
+            sh 'sudo apt-get install python3'
             sh 'pip3 install semgrep'
             sh 'semgrep ci'
             sh 'semgrep scan --config auto --json -o semgrep.json'
@@ -28,7 +31,6 @@ pipeline {
                 -F \'file=@semgrep.json;type=application/json\' \\
                 -F \'scan_type=Semgrep JSON Report\' \\
                 -F \'tags=test\' \\'''
-        }
       }
     }
   }
