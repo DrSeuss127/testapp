@@ -23,12 +23,13 @@ spec:
     persistentVolumeClaim:
       claimName: jjb-pvc
         '''
-                
+      args 'u-root:sudo -v'
     }
   }
   stages {
     stage('Install Python') {
       steps {
+            sh 'mkdir -p /var/lib/apt/lists/partial'
             sh 'apt-get update'
             sh 'apt-get install python3'
       }
