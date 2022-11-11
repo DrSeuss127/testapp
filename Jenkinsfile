@@ -1,7 +1,25 @@
 pipeline {
   agent{
-    docker{
-      image 'alpine'
+    kubernetes {
+      yaml '''
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    some-label: test
+spec:
+  containers:
+  - name: alpine
+    image: alpine:latest
+    volumeMounts:
+    - mountPath: "/var/jenkins_home/"
+      name: "jenkins"
+      readOnly: false
+    command:
+    - cat
+    tty: true
+        '''
+                
     }
   }
   stages {
