@@ -1,2 +1,2 @@
 sonar.projectKey=testapp
--Dproject.settings=./sonar-proejct.properties
+-Dproject.settings=./sonar-project.properties
