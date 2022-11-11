@@ -28,9 +28,8 @@ spec:
   stages {
     stage('Install Python') {
       steps {
-            sh 'mkdir -p /var/lib/apt/lists/partial'
-            sh 'apt-get update'
-            sh 'apt-get install python3'
+            sh("docker run --user='jenkins 'apt-get update'") 
+            sh("docker run --user='jenkins 'apt-get install python3'") 
       }
     }
     stage('Semgrep-Scan') {
