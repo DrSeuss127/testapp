@@ -28,8 +28,8 @@ spec:
   stages {
     stage('Install Python') {
       steps {
-            sh("docker run --user='jenkins 'apt-get update'") 
-            sh("docker run --user='jenkins 'apt-get install python3'") 
+            sh("docker run --user='jenkins apt-get update") 
+            sh("docker run --user='jenkins apt-get install python3") 
       }
     }
     stage('Semgrep-Scan') {
