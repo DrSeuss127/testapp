@@ -18,6 +18,10 @@ spec:
     command:
     - cat
     tty: true
+  volumes:
+  - name: jenkins
+    persistentVolumeClaim:
+      claimName: jjb-pvc
         '''
                 
     }
