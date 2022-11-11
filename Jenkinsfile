@@ -23,7 +23,6 @@ spec:
     persistentVolumeClaim:
       claimName: jjb-pvc
         '''
-      args 'u-root:sudo -v'
     }
   }
   stages {
