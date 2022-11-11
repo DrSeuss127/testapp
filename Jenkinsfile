@@ -5,20 +5,14 @@ pipeline {
     }
   }
   stages {
-    stage('Semgrep-Scan') {
-        environment { 
-          // Add the rules that Semgrep uses by setting the SEMGREP_RULES environment variable. 
-          SEMGREP_RULES = "p/default"
-          // Scan changed files in PRs or MRs (diff-aware scanning):
-          // SEMGREP_BASELINE_REF = "${GIT_BRANCH}"
-          // Uncomment SEMGREP_TIMEOUT to set this job's timeout (in seconds):
-          // Default timeout is 1800 seconds (30 minutes).
-          // Set to 0 to disable the timeout.
-          // SEMGREP_TIMEOUT = "300"
-        } 
+    stage('Install Python') {
       steps {
             sh 'sudo apt-get update'
             sh 'sudo apt-get install python3'
+      }
+    }
+    stage('Semgrep-Scan') {
+      steps {
             sh 'pip3 install semgrep'
             sh 'semgrep ci'
             sh 'semgrep scan --config auto --json -o semgrep.json'
