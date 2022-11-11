@@ -28,12 +28,16 @@ spec:
   stages {
     stage('Install Python') {
       steps {
+        container('alpine') {
             sh 'apt-get update'
             sh 'apt-get install python3'
+        }
+            
       }
     }
     stage('Semgrep-Scan') {
       steps {
+        container('alpine') {
             sh 'pip3 install semgrep'
             sh 'semgrep ci'
             sh 'semgrep scan --config auto --json -o semgrep.json'
@@ -46,6 +50,7 @@ spec:
                 -F \'file=@semgrep.json;type=application/json\' \\
                 -F \'scan_type=Semgrep JSON Report\' \\
                 -F \'tags=test\' \\'''
+        }
       }
     }
   }
