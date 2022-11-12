@@ -29,8 +29,9 @@ spec:
     stage('Install Python') {
       steps {
         container('alpine') {
-            sh 'apt-get update'
-            sh 'apt-get install python3'
+            sh 'apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python'
+            sh 'python3 -m ensurepip'
+            sh 'pip3 install --no-cache --upgrade pip setuptools'
         }
             
       }
