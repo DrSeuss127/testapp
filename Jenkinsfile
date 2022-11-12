@@ -29,9 +29,8 @@ spec:
     stage('Install Python') {
       steps {
         container('alpine') {
-            sh 'apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python'
-            sh 'python3 -m ensurepip'
-            sh 'pip3 install --no-cache --upgrade pip setuptools'
+            sh 'apk add --update python3'
+            sh 'pip3 install --upgrade pip setuptools'
         }
             
       }
@@ -39,7 +38,7 @@ spec:
     stage('Semgrep-Scan') {
       steps {
         container('alpine') {
-            sh 'apk add --update alpine-sdk'
+            sh 'apk add --upgrade alpine-sdk'
             sh 'apk add gcc'
             sh 'python3 -m pip install semgrep'
             sh 'semgrep ci'
