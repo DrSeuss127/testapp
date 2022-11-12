@@ -39,6 +39,7 @@ spec:
     stage('Semgrep-Scan') {
       steps {
         container('alpine') {
+            sh 'apk add --update alpine-sdk'
             sh 'apk add gcc && ln -sf gcc /usr/bin/gcc'
             sh 'python3 -m pip install semgrep'
             sh 'semgrep ci'
