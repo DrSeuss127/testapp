@@ -40,7 +40,7 @@ spec:
       steps {
         container('alpine') {
             sh 'apk add gcc'
-            sh 'python3 -m pip3 install semgrep'
+            sh 'python3 -m pip install semgrep'
             sh 'semgrep ci'
             sh 'semgrep scan --config auto --json -o semgrep.json'
             sh '''curl -X \'POST\' \\
