@@ -48,7 +48,7 @@ spec:
                 -H \'accept: application/json\' \\
                 -H \'Authorization: Token $defectdojo_token\' \\
                 -H \'Content-Type: multipart/form-data\' \\
-                -F \'test=69\' \\
+                -F \'test=102\' \\
                 -F \'file=@semgrep.json;type=application/json\' \\
                 -F \'scan_type=Semgrep JSON Report\' \\
                 -F \'tags=test\' \\'''
