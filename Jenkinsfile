@@ -39,7 +39,7 @@ spec:
     stage('Semgrep-Scan') {
       steps {
         container('alpine') {
-            sh 'apk add gcc'
+            sh 'apk add gcc-multilib'
             sh 'pip3 install semgrep'
             sh 'semgrep ci'
             sh 'semgrep scan --config auto --json -o semgrep.json'
