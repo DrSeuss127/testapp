@@ -30,6 +30,7 @@ spec:
       steps {
         container('alpine') {
             sh 'apk add --update python3'
+            sh 'python3 -m ensurepip'
             sh 'pip3 install --upgrade pip setuptools'
         }
             
