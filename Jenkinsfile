@@ -32,6 +32,7 @@ spec:
             sh 'apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python'
             sh 'python3 -m ensurepip'
             sh 'pip3 install --no-cache --upgrade pip setuptools'
+            sh 'pip3 install -upgrade setuptools'
         }
             
       }
@@ -39,7 +40,7 @@ spec:
     stage('Semgrep-Scan') {
       steps {
         container('alpine') {
-            sh 'apk add gcc-multilib'
+            sh 'apk add gcc'
             sh 'pip3 install semgrep'
             sh 'semgrep ci'
             sh 'semgrep scan --config auto --json -o semgrep.json'
