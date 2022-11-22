@@ -32,7 +32,7 @@ spec:
             sh 'apk add --update python3'
             sh 'python3 -m ensurepip'
             sh 'pip3 install --upgrade pip setuptools'
-            sh 'apk add --update python3.11-dev'
+            sh 'apk add --update python3-dev'
         }
             
       }
