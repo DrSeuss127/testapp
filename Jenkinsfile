@@ -48,7 +48,7 @@ spec:
             sh '''curl -X \'POST\' \\
                 \'http://defectdojo.aws.devops.com.ph/api/v2/reimport-scan/\' \\
                 -H \'accept: application/json\' \\
-                -H \'Authorization: Token $defectdojo_token\' \\
+                -H \'Authorization: Token 10498fe57df09d7cf800601657ac931a366b31b2\' \\
                 -H \'Content-Type: multipart/form-data\' \\
                 -F \'test=102\' \\
                 -F \'file=@semgrep.json;type=application/json\' \\
