@@ -25,6 +25,7 @@ spec:
         '''
     }
   }
+  stages {
     stage('Install Python') {
       steps {
         container('alpine') {
