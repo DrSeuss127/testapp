@@ -26,6 +26,20 @@ spec:
     }
   }
   stages {
+    stage('Install Git') {
+      steps {
+        container('alpine') {
+          sh 'apk add git'
+        }
+      }
+    }
+    stage('SCM') {
+      steps {
+        container('alpine') {
+          git url: 'https://github.com/DrSeuss127/testapp.git'
+        }
+      }
+    }
     stage('Install Python') {
       steps {
         container('alpine') {
@@ -37,23 +51,30 @@ spec:
             
       }
     }
-    stage('Semgrep-Scan') {
+    stage('Install Semgrep') {
       steps {
         container('alpine') {
             sh 'apk add --upgrade alpine-sdk'
             sh 'apk add gcc'
             sh 'python3 -m pip install semgrep'
+        }
+      }
+    }
+    stage('Semgrep-Scan') {
+      steps {
+        container('alpine') {
             sh 'semgrep ci'
             sh 'semgrep scan --config auto --json -o semgrep.json'
-            sh '''curl -X \'POST\' \\
-              \'https://defectdojo.aws.devops.com.ph/api/v2/reimport-scan/\' \\
-              -H \'accept: application/json\' \\
-              -H \'Authorization: Token 10498fe57df09d7cf800601657ac931a366b31b2\' \\
-              -H \'Content-Type: multipart/form-data\' \\
-              -F \'test=102\' \\
-              -F \'file=@semgrep.json;type=application/json\' \\
-              -F \'scan_type=Semgrep JSON Report\' \\
-              -F \'tags=test\' \\'''
+            sh """curl -X 'POST' \
+              "https://defectdojo.aws.devops.com.ph/api/v2/reimport-scan"/ \
+              -H 'accept:application/json' \
+              -H 'Authorization:Token 10498fe57df09d7cf800601657ac931a366b31b2' \
+              -H 'Content-Type:multipart/form-data' \
+              -F 'test=102' \
+              -F 'file=@scan.json;type=application/json' \
+              -F 'scan_type=Semgrep Scan' \
+              -F 'tags=test' 
+              """
         }
       }
     }
