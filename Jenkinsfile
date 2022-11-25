@@ -56,7 +56,7 @@ spec:
               -H 'accept:application/json' \
               -H 'Authorization:Token 10498fe57df09d7cf800601657ac931a366b31b2' \
               -H 'Content-Type:multipart/form-data' \
-              -F 'test=102' \
+              -F 'test=167' \
               -F 'file=@scan.json;type=application/json' \
               -F 'scan_type=Semgrep JSON Report' \
               -F 'tags=test' 
