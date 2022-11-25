@@ -84,7 +84,7 @@ pipeline {
     stage('SonarQube Analysis') {
       steps {
         container('maven') {
-          withSonarQubeEnv('sonarqube')
+          withSonarQubeEnv('sonarqube') {
             sh "mvn clean org.jacoco:jacoco-maven-plugin:${env.JACOCO_VERSION}:prepare-agent test"
             sh "mvn org.jacoco:jacoco-maven-plugin:${env.JACOCO_VERSION}:report org.sonarsource.scanner.maven:sonar-maven-plugin:${env.SONARQUBE_VERSION}:sonar -Dsonar.projectKey=${env.PROJECT_NAME} -Dsonar.java.coveragePlugin=jacoco -Dsonar.dynamicAnalysis=reuseReports verify"
             sh """curl -X 'POST' \
@@ -97,6 +97,8 @@ pipeline {
                 -F 'api_scan_configuration=SonarQube Bug findings(testapp)'
                 -F 'tags=test' 
                 """
+          }
+            
         }
       }
     }
