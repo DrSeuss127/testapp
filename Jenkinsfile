@@ -58,7 +58,7 @@ spec:
               -H 'Content-Type:multipart/form-data' \
               -F 'test=102' \
               -F 'file=@scan.json;type=application/json' \
-              -F 'scan_type=Semgrep Scan' \
+              -F 'scan_type=Semgrep JSON Report' \
               -F 'tags=test' 
               """
         }
