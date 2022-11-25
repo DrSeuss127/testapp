@@ -25,21 +25,6 @@ spec:
         '''
     }
   }
-  stages {
-    stage('Install Git') {
-      steps {
-        container('alpine') {
-          sh 'apk add git'
-        }
-      }
-    }
-    stage('SCM') {
-      steps {
-        container('alpine') {
-          git url: 'https://github.com/DrSeuss127/testapp.git'
-        }
-      }
-    }
     stage('Install Python') {
       steps {
         container('alpine') {
