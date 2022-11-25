@@ -85,18 +85,18 @@ pipeline {
       steps {
         container('maven') {
           withSonarQubeEnv('sonarqube')
-          sh "mvn clean org.jacoco:jacoco-maven-plugin:${env.JACOCO_VERSION}:prepare-agent test"
-          sh "mvn org.jacoco:jacoco-maven-plugin:${env.JACOCO_VERSION}:report org.sonarsource.scanner.maven:sonar-maven-plugin:${env.SONARQUBE_VERSION}:sonar -Dsonar.projectKey=${env.PROJECT_NAME} -Dsonar.java.coveragePlugin=jacoco -Dsonar.dynamicAnalysis=reuseReports verify"
-          sh """curl -X 'POST' \
-              "https://defectdojo.aws.devops.com.ph/api/v2/reimport-scan"/ \
-              -H 'accept:application/json' \
-              -H 'Authorization:Token 10498fe57df09d7cf800601657ac931a366b31b2' \
-              -H 'Content-Type:multipart/form-data' \
-              -F 'test=102' \
-              -F 'scan_type=SonarQube API Import' \
-              -F 'api_scan_configuration=SonarQube Bug findings(testapp)'
-              -F 'tags=test' 
-              """
+            sh "mvn clean org.jacoco:jacoco-maven-plugin:${env.JACOCO_VERSION}:prepare-agent test"
+            sh "mvn org.jacoco:jacoco-maven-plugin:${env.JACOCO_VERSION}:report org.sonarsource.scanner.maven:sonar-maven-plugin:${env.SONARQUBE_VERSION}:sonar -Dsonar.projectKey=${env.PROJECT_NAME} -Dsonar.java.coveragePlugin=jacoco -Dsonar.dynamicAnalysis=reuseReports verify"
+            sh """curl -X 'POST' \
+                "https://defectdojo.aws.devops.com.ph/api/v2/reimport-scan"/ \
+                -H 'accept:application/json' \
+                -H 'Authorization:Token 10498fe57df09d7cf800601657ac931a366b31b2' \
+                -H 'Content-Type:multipart/form-data' \
+                -F 'test=102' \
+                -F 'scan_type=SonarQube API Import' \
+                -F 'api_scan_configuration=SonarQube Bug findings(testapp)'
+                -F 'tags=test' 
+                """
         }
       }
     }
