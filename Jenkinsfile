@@ -50,7 +50,7 @@ spec:
       steps {
         container('alpine') {
             sh 'semgrep ci'
-            sh 'semgrep scan --config auto --json -o semgrep.json'
+            sh 'semgrep scan --config auto --json -o scan.json'
             sh """curl -X 'POST' \
               "https://defectdojo.aws.devops.com.ph/api/v2/reimport-scan"/ \
               -H 'accept:application/json' \
