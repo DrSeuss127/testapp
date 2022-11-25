@@ -99,13 +99,16 @@ pipeline {
               """
         }
       }
+    }
 
-      script {
-        def qualityGate = waitForQualityGate()
-        if (qualityGate.status != 'OK'){
-          env.QUALITY_GATE_SUCCESS = false
-          env.PR_STATE = 'failure'
-          env.PR_DESCRIPTION = 'Build succeeded but failed on Quality Gate'
+    stage('Quality Gate') {
+      steps {
+        container('maven') {
+          def qualityGate = waitForQualityGate()
+          if (qualityGate.status != 'OK'){
+            env.QUALITY_GATE_SUCCESS = false
+            env.PR_STATE = 'failure'
+            env.PR_DESCRIPTION = 'Build succeeded but failed on Quality Gate'
         }
       }
     }
