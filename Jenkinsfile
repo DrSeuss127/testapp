@@ -28,10 +28,11 @@ pipeline {
               command:
               - cat
               tty: true
-
+            
             - name: maven
-                image: 3.8.6-jdk-11
-                - cat
+              image: maven:3.8.6-jdk-11
+              command:
+              - cat
               tty: true
 
             volumes:
