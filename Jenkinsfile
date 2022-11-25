@@ -30,7 +30,7 @@ pipeline {
               tty: true
 
             - name: maven
-                image: maven:3.8.6-jdk-11
+                image: 3.8.6-jdk-11
                 - cat
               tty: true
 
