@@ -46,7 +46,7 @@ spec:
             sh 'semgrep ci'
             sh 'semgrep scan --config auto --json -o semgrep.json'
             sh '''curl -X \'POST\' \\
-              \'http://defectdojo.aws.devops.com.ph/api/v2/reimport-scan/\' \\
+              \'https://defectdojo.aws.devops.com.ph/api/v2/reimport-scan/\' \\
               -H \'accept: application/json\' \\
               -H \'Authorization: Token 10498fe57df09d7cf800601657ac931a366b31b2\' \\
               -H \'Content-Type: multipart/form-data\' \\
