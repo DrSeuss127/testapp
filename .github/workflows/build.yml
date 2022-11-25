@@ -1,6 +1,6 @@
 name: Build
 on:
-  push:
+  pull_request:
     branches:
       - main # or the name of your main branch
 jobs:
@@ -17,7 +17,12 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
       # If you wish to fail your job when the Quality Gate is red, uncomment the
       # following lines. This would typically be used to fail a deployment.
+<<<<<<< HEAD
       - uses: sonarsource/sonarqube-quality-gate-action@master
       #   timeout-minutes: 5
+=======
+       - uses: sonarsource/sonarqube-quality-gate-action@master
+         timeout-minutes: 5
+>>>>>>> 42ced477aa63993350f2b29fd7a839677c8b2d8f
          env:
            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
