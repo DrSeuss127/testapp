@@ -26,20 +26,6 @@ spec:
     }
   }
   stages {
-    stage('Install Git') {
-      steps {
-        container('alpine') {
-          sh 'apk add git'
-        }
-      }
-    }
-    stage('SCM') {
-      steps {
-        container('alpine') {
-          git url: 'https://github.com/DrSeuss127/testapp.git'
-        }
-      }
-    }
     stage('Install Python') {
       steps {
         container('alpine') {
@@ -64,15 +50,15 @@ spec:
       steps {
         container('alpine') {
             sh 'semgrep ci'
-            sh 'semgrep scan --config auto --json -o semgrep.json'
+            sh 'semgrep scan --config auto --json -o scan.json'
             sh """curl -X 'POST' \
               "https://defectdojo.aws.devops.com.ph/api/v2/reimport-scan"/ \
               -H 'accept:application/json' \
               -H 'Authorization:Token 10498fe57df09d7cf800601657ac931a366b31b2' \
               -H 'Content-Type:multipart/form-data' \
-              -F 'test=102' \
+              -F 'test=167' \
               -F 'file=@scan.json;type=application/json' \
-              -F 'scan_type=Semgrep Scan' \
+              -F 'scan_type=Semgrep JSON Report' \
               -F 'tags=test' 
               """
         }
