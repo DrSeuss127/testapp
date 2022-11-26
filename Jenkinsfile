@@ -85,9 +85,9 @@ pipeline {
       steps {
         container('maven') {
           withSonarQubeEnv('sonarqube') {
-            sh "mvn -f ("/home/jenkins/agent/workspace/testapp/pom.xml") compile"
-            sh "mvn clean org.jacoco:jacoco-maven-plugin:${env.JACOCO_VERSION}:prepare-agent test"
-            sh "mvn org.jacoco:jacoco-maven-plugin:${env.JACOCO_VERSION}:report org.sonarsource.scanner.maven:sonar-maven-plugin:${env.SONARQUBE_VERSION}:sonar -Dsonar.projectKey=${env.PROJECT_NAME} -Dsonar.java.coveragePlugin=jacoco -Dsonar.dynamicAnalysis=reuseReports verify"
+            //sh "mvn -f ('/home/jenkins/agent/workspace/testapp/pom.xml') compile"
+            //sh "mvn clean org.jacoco:jacoco-maven-plugin:${env.JACOCO_VERSION}:prepare-agent test"
+            //sh "mvn org.jacoco:jacoco-maven-plugin:${env.JACOCO_VERSION}:report org.sonarsource.scanner.maven:sonar-maven-plugin:${env.SONARQUBE_VERSION}:sonar -Dsonar.projectKey=${env.PROJECT_NAME} -Dsonar.java.coveragePlugin=jacoco -Dsonar.dynamicAnalysis=reuseReports verify"
             sh """curl -X 'POST' \
                 "https://defectdojo.aws.devops.com.ph/api/v2/reimport-scan"/ \
                 -H 'accept:application/json' \
