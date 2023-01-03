@@ -141,19 +141,27 @@ pipeline {
         }
     }
 
-    stage('Quality Gate') {
-      steps {
-        container('maven') {
-          script {
-            def qualityGate = waitForQualityGate()
-            if (qualityGate.status != 'OK') {
-              env.QUALITY_GATE_SUCCESS = false
-              env.PR_STATE = 'failure'
-              env.PR_DESCRIPTION = 'Build succeeded but failed on Quality Gate'
-          }
-          }
+    stage ('Quality Gate') {
+        steps {
+            container('maven') {
+                withSonarQubeEnv('sonarqube') {
+                    // Use JaCoCo (Java Code Coverage) to measure code coverage
+                    // Use SonarScanner to analyze code coverage produced by JaCoCo
+                    sh "mvn clean org.jacoco:jacoco-maven-plugin:${env.JACOCO_VERSION}:prepare-agent test"
+                    sh "mvn org.jacoco:jacoco-maven-plugin:${env.JACOCO_VERSION}:report org.sonarsource.scanner.maven:sonar-maven-plugin:${env.SONARQUBE_VERSION}:sonar -Dsonar.projectKey=${env.PROJECT_NAME} -Dsonar.java.coveragePlugin=jacoco -Dsonar.dynamicAnalysis=reuseReports verify"
+                }
+            }
+
+            script {
+                //Throw an error to fail the build when SonarScanner does not pass the project
+                def qualityGate = waitForQualityGate()
+                if (qualityGate.status != "OK") {
+                    env.QUALITY_GATE_SUCCESS = false
+                    env.PR_STATE = 'failure'
+                    env.PR_DESCRIPTION = 'Build Succeeded but failed on quality gate'
+                }
+            } 
         }
-      }
     }
   }
 }
