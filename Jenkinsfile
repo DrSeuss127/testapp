@@ -87,48 +87,50 @@ pipeline {
     }
     // Scan Config can be found at: https://defectdojo.aws.devops.com.ph/api/v2/product_api_scan_configurations/
     stage('SonarQube Scan') {
-      steps {
-        container('maven') {    
-          withSonarQubeEnv('sonarqube') {
-            // Bug Finding
-            sh """curl -X 'POST' \
-              "${env.HOST_NAME}"/ \
-              -H 'accept:application/json' \
-              -H 'Authorization:Token ${env.TOKEN}' \
-              -H 'Content-Type:multipart/form-data' \
-              -F 'test=102' \
-              -F 'scan_type=SonarQube API Import' \
-              -F 'api_scan_configuration=38' \
-              -F 'tags=test' 
-              """
+        steps {
+            container('maven') {    
+            withSonarQubeEnv('sonarqube') {
+                
+                // Bug Finding
+                sh """curl -X 'POST' \
+                    "${env.HOST_NAME}"/ \
+                    -H 'accept:application/json' \
+                    -H 'Authorization:Token ${env.TOKEN}' \
+                    -H 'Content-Type:multipart/form-data' \
+                    -F 'test=232' \
+                    -F 'scan_type=SonarQube API Import' \
+                    -F 'api_scan_configuration=18' \
+                    -F 'tags=test' 
+                    """
 
-            // Smell Finding
-            sh """curl -X 'POST' \
-                "${env.HOST_NAME}"/ \
-                -H 'accept:application/json' \
-                -H 'Authorization:Token ${env.TOKEN}' \
-                -H 'Content-Type:multipart/form-data' \
-                -F 'test=103' \
-                -F 'scan_type=SonarQube API Import' \
-                -F 'api_scan_configuration=39' \
-                -F 'tags=test' 
-                """
 
-            // Vulnerabilities Finding
-            sh """curl -X 'POST' \
-                "${env.HOST_NAME}"/ \
-                -H 'accept:application/json' \
-                -H 'Authorization:Token ${env.TOKEN}' \
-                -H 'Content-Type:multipart/form-data' \
-                -F 'test=104' \
-                -F 'scan_type=SonarQube API Import' \
-                -F 'api_scan_configuration=40' \
-                -F 'tags=test' 
-                """
+                // Smell Finding
+                sh """curl -X 'POST' \
+                    "${env.HOST_NAME}"/ \
+                    -H 'accept:application/json' \
+                    -H 'Authorization:Token ${env.TOKEN}' \
+                    -H 'Content-Type:multipart/form-data' \
+                    -F 'test=233' \
+                    -F 'scan_type=SonarQube API Import' \
+                    -F 'api_scan_configuration=19' \
+                    -F 'tags=test' 
+                    """
+
+                // Vulnerabilities Finding
+                sh """curl -X 'POST' \
+                    "${env.HOST_NAME}"/ \
+                    -H 'accept:application/json' \
+                    -H 'Authorization:Token ${env.TOKEN}' \
+                    -H 'Content-Type:multipart/form-data' \
+                    -F 'test=234' \
+                    -F 'scan_type=SonarQube API Import' \
+                    -F 'api_scan_configuration=20' \
+                    -F 'tags=test' 
+                    """
+                }
+                
             }
-            
         }
-      }
     }
 
     stage ('Evaluate Findings') {
