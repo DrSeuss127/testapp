@@ -6,6 +6,10 @@ pipeline {
             QUALITY_GATE_SUCCESS = true
             PR_STATE = 'success'
             PR_DESCRIPTION = 'Build Successful!'
+
+            // Defect Dojo Environment Variables
+            HOST_NAME = "https://defectdojo.aws.devops.com.ph/api/v2/reimport-scan"
+            TOKEN = "10498fe57df09d7cf800601657ac931a366b31b2"
   }
   agent{
     kubernetes {
@@ -81,27 +85,58 @@ pipeline {
         }
       }
     }
-    stage('SonarQube Analysis') {
+    // Scan Config can be found at: https://defectdojo.aws.devops.com.ph/api/v2/product_api_scan_configurations/
+    stage('SonarQube Scan') {
       steps {
-        container('maven') {
+        container('maven') {    
           withSonarQubeEnv('sonarqube') {
-            //sh "mvn -f ('/home/jenkins/agent/workspace/testapp/pom.xml') compile"
-            //sh "mvn clean org.jacoco:jacoco-maven-plugin:${env.JACOCO_VERSION}:prepare-agent test"
-            //sh "mvn org.jacoco:jacoco-maven-plugin:${env.JACOCO_VERSION}:report org.sonarsource.scanner.maven:sonar-maven-plugin:${env.SONARQUBE_VERSION}:sonar -Dsonar.projectKey=${env.PROJECT_NAME} -Dsonar.java.coveragePlugin=jacoco -Dsonar.dynamicAnalysis=reuseReports verify"
+            // Bug Finding
             sh """curl -X 'POST' \
-                "https://defectdojo.aws.devops.com.ph/api/v2/reimport-scan"/ \
+              "${env.HOST_NAME}"/ \
+              -H 'accept:application/json' \
+              -H 'Authorization:Token ${env.TOKEN}' \
+              -H 'Content-Type:multipart/form-data' \
+              -F 'test=102' \
+              -F 'scan_type=SonarQube API Import' \
+              -F 'api_scan_configuration=39' \
+              -F 'tags=test' 
+              """
+
+            // Smell Finding
+            sh """curl -X 'POST' \
+                "${env.HOST_NAME}"/ \
                 -H 'accept:application/json' \
-                -H 'Authorization:Token 10498fe57df09d7cf800601657ac931a366b31b2' \
+                -H 'Authorization:Token ${env.TOKEN}' \
                 -H 'Content-Type:multipart/form-data' \
-                -F 'test=102' \
+                -F 'test=104' \
                 -F 'scan_type=SonarQube API Import' \
-                -F 'api_scan_configuration=SonarQube Bug findings(testapp)'
+                -F 'api_scan_configuration=38' \
                 -F 'tags=test' 
                 """
-          }
+
+            // Vulnerabilities Finding
+            sh """curl -X 'POST' \
+                "${env.HOST_NAME}"/ \
+                -H 'accept:application/json' \
+                -H 'Authorization:Token ${env.TOKEN}' \
+                -H 'Content-Type:multipart/form-data' \
+                -F 'test=103' \
+                -F 'scan_type=SonarQube API Import' \
+                -F 'api_scan_configuration=40' \
+                -F 'tags=test' 
+                """
+            }
             
         }
       }
+    }
+
+    stage ('Evaluate Findings') {
+        steps {
+            container('ubuntu') {
+                sh 'python3 evaluate_findings.py'
+            }
+        }
     }
 
     stage('Quality Gate') {
