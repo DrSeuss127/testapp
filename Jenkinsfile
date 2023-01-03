@@ -98,7 +98,7 @@ pipeline {
               -H 'Content-Type:multipart/form-data' \
               -F 'test=102' \
               -F 'scan_type=SonarQube API Import' \
-              -F 'api_scan_configuration=39' \
+              -F 'api_scan_configuration=38' \
               -F 'tags=test' 
               """
 
@@ -108,9 +108,9 @@ pipeline {
                 -H 'accept:application/json' \
                 -H 'Authorization:Token ${env.TOKEN}' \
                 -H 'Content-Type:multipart/form-data' \
-                -F 'test=104' \
+                -F 'test=103' \
                 -F 'scan_type=SonarQube API Import' \
-                -F 'api_scan_configuration=38' \
+                -F 'api_scan_configuration=39' \
                 -F 'tags=test' 
                 """
 
@@ -120,7 +120,7 @@ pipeline {
                 -H 'accept:application/json' \
                 -H 'Authorization:Token ${env.TOKEN}' \
                 -H 'Content-Type:multipart/form-data' \
-                -F 'test=103' \
+                -F 'test=104' \
                 -F 'scan_type=SonarQube API Import' \
                 -F 'api_scan_configuration=40' \
                 -F 'tags=test' 
