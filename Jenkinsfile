@@ -135,7 +135,7 @@ pipeline {
 
     stage ('Evaluate Findings') {
         steps {
-            container('ubuntu') {
+            container('alpine') {
                 sh 'python3 testapp/evaluate_findings.py'
             }
         }
