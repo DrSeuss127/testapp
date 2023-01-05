@@ -95,7 +95,7 @@ pipeline {
     }
     
     // Scan Config can be found at: https://defectdojo.aws.devops.com.ph/api/v2/product_api_scan_configurations/
-    stage('SonarQube Scan') {
+    stage('SonarQube Upload') {
         steps {
             container('maven') {    
             withSonarQubeEnv('sonarqube') {
