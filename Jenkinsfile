@@ -85,6 +85,15 @@ pipeline {
         }
       }
     }
+
+    stage ('Evaluate Findings') {
+        steps {
+            container('alpine') {
+                sh 'python3 evaluate_findings.py'
+            }
+        }
+    }
+    
     // Scan Config can be found at: https://defectdojo.aws.devops.com.ph/api/v2/product_api_scan_configurations/
     stage('SonarQube Scan') {
         steps {
@@ -133,12 +142,6 @@ pipeline {
         }
     }
 
-    stage ('Evaluate Findings') {
-        steps {
-            container('alpine') {
-                sh 'python3 evaluate_findings.py'
-            }
-        }
-    }
+    
   }
 }
